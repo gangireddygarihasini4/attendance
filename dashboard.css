@@ -1,0 +1,42 @@
+
+        body {
+            font-family: Arial;
+            background: #f4f6f9;
+            text-align: center;
+        }
+        .box {
+            width: 70%;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        input, select {
+            padding: 8px;
+            margin: 5px;
+        }
+        button {
+            padding: 8px 12px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        table {
+            width: 100%;
+            margin-top: 15px;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        th {
+            background: #2c3e50;
+            color: white;
+        }
+        #logout{
+            margin-left: 1000px;
+            background-color: rgb(255, 102, 0);
+            color: #ddd;
+            width: 100px;
+        }
+   
