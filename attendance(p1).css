@@ -2,6 +2,7 @@ body{
     background-color: rgb(235, 236, 236);
     text-align: center;
   background-image: url(git.png);
+    background-repeat:no-repeat;
  background-size: cover;
  background-repeat:repeat;
     
