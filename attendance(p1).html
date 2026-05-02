@@ -1,1 +1,66 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="attendance(p1).css">
+</head>
+<body>
+
+<div class="head">
+    <img src="vemulogo.png" alt="atten image">
+    <div class="title">
+        <h1 class="hs">STUDENT ATTENDANCE</h1>
+        <h1 class="hs">MANAGEMENT SYSTEM</h1>
+    </div>
+</div>
+
+<h1 id="lgn">LOGIN</h1> 
+
+<table class="table">
+<tr>
+<td>
+
+<label>Full Name</label><br><br>
+<input type="text" id="name" placeholder="Enter your name"><br><br>
+
+<label>Email</label><br><br>
+<input type="text" id="email" placeholder="Enter Email"><br><br>
+
+<label>Password</label><br><br>
+<input type="password" id="password" placeholder="Password"><br><br>
+
+
+<select id="role">
+    <option value="">--Select Role--</option>
+    <option value="Admin">ADMIN</option>
+    <option value="hod">HOD</option>
+    <option value="Faculty">FACULTY</option>
+    <option value="Student">STUDENT</option>
+</select>
+
+<br>
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+
+<input type="button" value="LOGIN" class="color" onclick="login()"><br><br>
+
+<input type="reset" value="RESET" class="color">
+
+</td>
+</tr>
+</table>
+
+<p id="message"></p>
+
+<script src="att.js"></script>
+
+</body>
+</html> 
