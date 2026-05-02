@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="dashboard.css">  
+</head>
+<body>
+    <h1>HOD dashboard</h1>
+    <button onclick="logout()" id="logout">logout</button>
+    <div class="box">
+        <h3>Add User</h3>
+        
+        <input type="text" id="gmail" placeholder="Enter Gmail">
+        <input type="text" id="name" placeholder="Enter Name">
+        <input type="text" id="password" placeholder="Enter Password">
+        <select id="role">
+            
+    
+            <option value="CLASS TEACHER">FACULTY</option>
+            <option value="STUDENT">STUDENT</option>
+        </select>
+        <button onclick="addUser()">Add User</button>
+        <h3>User List</h3>
+        <table id="table">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+            
+                <th>Role</th>
+                <th>Action</th>
+            </tr>
+        </table>
+
+    </div>
+    <script src="das.js">
+
+    </script>
+    <h2>Attendance Reports</h2>
+<div id="hodReport"></div>
+<select id="filterBranch">
+<option value="">All Branch</option>
+<option>CSE</option>
+<option>ECE</option>
+<option>EEE</option>
+<option>MECH</option>
+</select>
+
+<select id="filterSection">
+<option value="">All Section</option>
+<option>A</option>
+<option>B</option>
+<option>C</option>
+</select>
+<button onclick="viewReports()">View Reports</button>
+</body>
+</html>
