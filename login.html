@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Login</title>
+<style>
+body{text-align:center;font-family:Arial;margin-top:100px;}
+input{padding:10px;margin:10px;}
+button{padding:10px;background:#1a4d8f;color:white;border:none;}
+</style>
+</head>
+<body>
+
+<h2>Login</h2>
+
+<input type="text" id="username" placeholder="Username"><br>
+<input type="password" id="password" placeholder="Password"><br>
+
+<button onclick="login()">Login</button>
+
+<script>
+function login(){
+let username=document.getElementById("username").value.toLowerCase();
+let password=document.getElementById("password").value;
+
+let students=JSON.parse(localStorage.getItem("students"))||[];
+
+if(username==="admin" && password==="admin123"){
+localStorage.setItem("role","Admin");
+window.location.href="admin.html";
+return;
+}
+
+
+let user=students.find(s=>s.name.toLowerCase()===username);
+
+if(user){
+localStorage.setItem("role","Student");
+localStorage.setItem("currentUser", JSON.stringify(user));
+window.location.href="std1.html";
+}else{
+alert("Invalid Login");
+}
+}
+</script>
+
+</body>
+</html>
