@@ -1,19 +1,10 @@
-// Load users from localStorage
+
 let users = JSON.parse(localStorage.getItem("user")) || [];
 
-// Create default admin only once
-if (users.length === 0) {
-    users.push({
-        id: 1,
-        name: "Admin",
-        gmail: "naveenkilarigmail.com",
-        password: "vemu",
-        role: "Admin"
-    });
-    localStorage.setItem("user", JSON.stringify(users));
-}
 
-// ADD USER
+    localStorage.setItem("user", JSON.stringify(users));
+
+
 function addUser() {
 
     users = JSON.parse(localStorage.getItem("user")) || [];
@@ -28,7 +19,7 @@ function addUser() {
         return;
     }
 
-    // Proper ID generation
+    
     let id = users.length > 0 ? users[users.length - 1].id + 1 : 1;
 
     let newUser = { id, name, gmail, password, role };
@@ -42,12 +33,12 @@ function addUser() {
     render();
 }
 
-// DELETE USER
+
 function deleteUser(index) {
 
     users = JSON.parse(localStorage.getItem("user")) || [];
 
-    // Prevent deleting Admin
+    
     if (users[index].role === "Admin") {
         alert("Cannot delete Admin");
         return;
@@ -60,14 +51,13 @@ function deleteUser(index) {
     }
 }
 
-// CLEAR INPUT FIELDS
+
 function clearFields() {
     document.getElementById("name").value = "";
     document.getElementById("gmail").value = "";
     document.getElementById("password").value = "";
 }
 
-// RENDER USERS TABLE
 function render() {
 
     users = JSON.parse(localStorage.getItem("user")) || [];
@@ -97,7 +87,7 @@ function render() {
     });
 }
 
-// VIEW REPORTS
+
 function viewReports() {
 
     let students = JSON.parse(localStorage.getItem("students")) || [];
