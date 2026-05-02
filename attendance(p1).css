@@ -1,18 +1,10 @@
-body {
-    margin: 0;
-    padding: 0;
-    min-height: 100dvh;  
-    width: 100%;
+body{
+    background-color: rgb(235, 236, 236);
+    text-align: center;
+  background-image: url(git.png);
+ background-size: cover;
+ background-repeat:no-repeat;
     
-
-    background: url('vemu.jpg') no-repeat center center;
-    background-size: cover;
-    background-attachment: scroll; /* 'fixed' is buggy on iOS Safari */
-    
-    
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 .hs{
     color: black;
