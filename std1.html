@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Student Dashboard</title>
+
+<style>
+body{
+  text-align:center;
+  font-family:Arial;
+  background:skyblue;
+  padding:20px;
+}
+
+.card{
+  background:white;
+  padding:20px;
+  border-radius:10px;
+  width:320px;
+  margin:auto;
+}
+
+.bar{
+  background:#eee;
+  height:20px;
+  border-radius:10px;
+  margin-top:10px;
+}
+
+.fill{
+  height:100%;
+  color:white;
+  text-align:center;
+  border-radius:10px;
+  font-size:12px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+<h2>My Attendance</h2>
+
+<p id="info"></p>
+<p id="total"></p>
+<p id="present"></p>
+<p id="percent"></p>
+
+<div class="bar">
+  <div id="fill" class="fill"></div>
+</div>
+
+<br>
+<button onclick="logout()">Logout</button>
+</div>
+
+<script>
+
+
+let user = JSON.parse(localStorage.getItem("currentUser"));
+
+if(!user){
+  alert("Login First ❌");
+  window.location.href = "login.html";
+}
+
+
+let students = JSON.parse(localStorage.getItem("students")) || [];
+
+
+let s = students.find(st =>
+  st.name === user.name &&
+  st.branch === user.branch &&
+  st.section === user.section
+);
+
+
+if(!s){
+  alert("Student data not found ❌");
+  throw new Error("No student found");
+}
+
+
+let per = s.total === 0 ? 0 : ((s.present / s.total) * 100).toFixed(1);
+
+
+document.getElementById("info").innerText =
+  "Name: " + s.name + " (" + s.branch + "-" + s.section + ")";
+
+document.getElementById("total").innerText =
+  "Total Classes: " + s.total;
+
+document.getElementById("present").innerText =
+  "Present: " + s.present;
+
+document.getElementById("percent").innerText =
+  "Attendance: " + per + "%";
+
+let bar = document.getElementById("fill");
+bar.style.width = per + "%";
+bar.innerText = per + "%";
+bar.style.background = per >= 75 ? "green" : "red";
+
+
+function logout(){
+  localStorage.removeItem("currentUser");
+  window.location.href = "login.html";
+}
+
+</script>
+
+</body>
+</html>
