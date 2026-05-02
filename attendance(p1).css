@@ -3,7 +3,7 @@ body{
     text-align: center;
   background-image: url(git.png);
  background-size: cover;
- 
+ background-repeat:repeat;
     
 }
 .hs{
@@ -25,9 +25,12 @@ img{
 }
 
 .table{
-margin-top:250px; 
-margin-left:600px;
+    
 
+  
+  margin-top:250px; /* space between search bar and table */
+
+margin-left: 600px;
     text-align: center;
     
     display: flex;
