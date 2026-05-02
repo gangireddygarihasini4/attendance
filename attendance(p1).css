@@ -1,1 +1,96 @@
+body{
+    background-color: rgb(235, 236, 236);
+    text-align: center;
+  
+ background-size: cover;
+ background-repeat:repeat;
+    
+}
+.hs{
+    color: black;
+}
 
+img{
+    top:500px;
+    width: 100px;
+    border-radius: 200px;
+    margin-bottom: 10px;
+    
+    
+}
+.head{
+    display: flex;
+    justify-content: center;
+    gap:20px; 
+}
+
+.table{
+    text-align: center;
+    margin: 20px auto;
+    display: flex;
+    gap: 1000px;
+    background-color:white;
+    color: black;
+    width: 500px;
+    height: 500px;
+
+    padding:40px;
+    border: 3px solid grey;
+    gap:30px;
+}
+
+
+#table1{
+
+    display: flex;
+margin:10px auto;
+    background-color: white;
+    color: black;
+    width: 500px;
+    height: 650px;
+    text-align: center;
+    padding:40px;
+    border-radius: 25px;
+    border: 3px solid grey;
+}
+input,select{
+    width: 400px;
+    height:30px;
+    font-size:18px;
+    text-align: center;
+    justify-content: center;
+    
+   
+
+}
+
+#role{
+    width: 400px;
+    height:30px;
+    font-size:18px;
+    text-align: center;
+    justify-content: center;
+    
+   
+
+}
+.color{
+    background-color:blue;
+    color:white;
+
+    
+}
+.color:hover{
+    background-color: skyblue;
+    color: white;
+}
+a{
+  color:red;
+}
+label{
+    font-size: 25px;
+    text-align: left;
+}
+#lgn{
+    color:black;
+}
