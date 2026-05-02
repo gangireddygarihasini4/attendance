@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Attendance System</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
+body{background:#f4f7fb;padding:20px;}
+.container{max-width:1200px;margin:auto;}
+h1{text-align:center;color:#1a4d8f;margin-bottom:20px;}
+
+.card{
+  background:#fff;
+  padding:20px;
+  border-radius:10px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.1);
+  margin-bottom:20px;
+}
+
+input,select,button{
+  padding:8px;
+  margin:5px;
+  border-radius:5px;
+  border:1px solid #ccc;
+}
+#l{
+  background-color: red;
+  margin-left: 1050px;
+}
+
+button{
+  background:#1a4d8f;
+  color:#fff;
+  border:none;
+  cursor:pointer;
+}
+button:hover{background:#163d70;}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:10px;
+}
+th,td{
+  border:1px solid #ddd;
+  padding:8px;
+  text-align:center;
+}
+th{
+  background:#1a4d8f;
+  color:white;
+}
+
+.present{color:green;font-weight:bold;}
+.absent{color:red;font-weight:bold;}
+.good{color:green;}
+.low{color:red;}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h1>Student Attendance System</h1>
+
+    <button onclick="logout()" id="l">logout</button>
+
+<div class="card">
+<h2>Add Student</h2>
+
+<input type="text" id="studentName" placeholder="Enter Student Name">
+
+<select id="branch">
+<option value="">Select Branch</option>
+<option>CSE</option>
+<option>ECE</option>
+<option>EEE</option>
+<option>MECH</option>
+<option>CIVIL</option>
+</select>
+
+<select id="section">
+<option value="">Select Section</option>
+<option>A</option>
+<option>B</option>
+<option>C</option>
+</select>
+
+<button onclick="addStudent()">Add Student</button>
+</div>
+
+
+<div class="card">
+<h2>Select Branch & Section</h2>
+
+<select id="filterBranch" onchange="render()">
+<option value="">All Branches</option>
+<option>CSE</option>
+<option>ECE</option>
+<option>EEE</option>
+<option>MECH</option>
+<option>CIVIL</option>
+</select>
+
+<select id="filterSection" onchange="render()">
+<option value="">All Sections</option>
+<option>A</option>
+<option>B</option>
+<option>C</option>
+</select>
+
+
+<input type="text" id="filterSubject" placeholder="Enter Subject" onkeyup="render()">
+
+</div>
+
+
+<div class="card">
+<h2>Attendance Table</h2>
+<table id="table">
+<thead>
+<tr>
+<th>S.No</th>
+<th>Name</th>
+<th>Branch</th>
+<th>Section</th>
+<th>Subject</th>
+<th>Total</th>
+<th>Present</th>
+<th>Absent</th>
+<th>%</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+
+<button onclick="submitAttendance()">Submit Attendance</button>
+</div>
+
+
+<div class="card">
+<h2>Attendance Report</h2>
+<div id="reportBox"></div>
+<button onclick="generateReport()">Generate Report</button>
+<button onclick="downloadReport()">Download Report</button>
+</div>
+
+</div>
+
+<script>
+
+
+let students = JSON.parse(localStorage.getItem("students")) || [];
+
+function addStudent(){
+
+let name = document.getElementById("studentName").value;
+let branch = document.getElementById("branch").value;
+let section = document.getElementById("section").value;
+
+if(name==="" || branch==="" || section===""){
+alert("Fill all fields");
+return;
+}
+
+students.push({
+  id: students.length + 1,
+  name,
+  branch,
+  section,
+  total:0,
+  present:0
+});
+
+localStorage.setItem("students",JSON.stringify(students));
+
+document.getElementById("studentName").value="";
+document.getElementById("branch").value="";
+document.getElementById("section").value="";
+
+render();
+}
+
+
+function percent(p,t){
+return t===0 ? 0 : ((p/t)*100).toFixed(1);
+}
+
+
+function render(){
+let tbody=document.querySelector("#table tbody");
+tbody.innerHTML="";
+
+let fBranch=document.getElementById("filterBranch").value;
+let fSection=document.getElementById("filterSection").value;
+let fSubject=document.getElementById("filterSubject").value;
+
+let filtered = students.filter(s=>{
+return (fBranch==="" || s.branch===fBranch) &&
+       (fSection==="" || s.section===fSection);
+});
+
+filtered.forEach((s,i)=>{
+let abs=s.total-s.present;
+let per=percent(s.present,s.total);
+let status=per>=75?"Good":"Low";
+
+tbody.innerHTML+=`
+<tr>
+<td>${i+1}</td>
+<td>${s.name}</td>
+<td>${s.branch}</td>
+<td>${s.section}</td>
+<td>${fSubject}</td>
+<td>${s.total}</td>
+<td class="present">${s.present}</td>
+<td class="absent">${abs}</td>
+<td>${per}%</td>
+<td class="${status==='Good'?'good':'low'}">${status}</td>
+
+<td>
+<label><input type="radio" name="att${i}" value="present"> P</label>
+<label><input type="radio" name="att${i}" value="absent"> A</label>
+<br>
+<button style="background:red;color:white;" onclick="deleteStudent(${students.indexOf(s)})">Delete</button>
+</td>
+</tr>
+`;
+});
+}
+
+
+function submitAttendance(){
+
+let fBranch=document.getElementById("filterBranch").value;
+let fSection=document.getElementById("filterSection").value;
+
+let filtered = students.filter(s=>{
+return (fBranch==="" || s.branch===fBranch) &&
+       (fSection==="" || s.section===fSection);
+});
+
+filtered.forEach((s,i)=>{
+let selected=document.querySelector(`input[name="att${i}"]:checked`);
+if(selected){
+s.total++;
+if(selected.value==="present") s.present++;
+}
+});
+
+document.querySelectorAll("input[type=radio]").forEach(r=>r.checked=false);
+
+localStorage.setItem("students",JSON.stringify(students));
+alert("Attendance Submitted ✅");
+render();
+}
+
+
+function deleteStudent(i){
+if(confirm("Delete student?")){
+students.splice(i,1);
+localStorage.setItem("students",JSON.stringify(students));
+render();
+}
+}
+
+
+function generateReport(){
+
+let fBranch=document.getElementById("filterBranch").value;
+let fSection=document.getElementById("filterSection").value;
+
+let filtered = students.filter(s=>{
+return (fBranch==="" || s.branch===fBranch) &&
+       (fSection==="" || s.section===fSection);
+});
+
+let box=document.getElementById("reportBox");
+
+if(filtered.length===0){
+box.innerHTML="<h3>No students found</h3>";
+return;
+}
+
+let html=`<div style="display:flex;flex-wrap:wrap;gap:15px;">`;
+
+filtered.forEach(s=>{
+let per=percent(s.present,s.total);
+let color=per>=75?"green":"red";
+
+html+=`
+<div style="width:250px;padding:15px;background:#fff;border-radius:10px;">
+<h3>${s.name}</h3>
+<p>${s.branch} - ${s.section}</p>
+<p>Attendance: ${per}%</p>
+<p style="color:${color}">${per>=75?"Good":"Low"}</p>
+</div>`;
+});
+
+html+=`</div>`;
+box.innerHTML=html;
+}
+
+
+function downloadReport(){
+
+let fBranch=document.getElementById("filterBranch").value;
+let fSection=document.getElementById("filterSection").value;
+
+let filtered = students.filter(s=>{
+return (fBranch==="" || s.branch===fBranch) &&
+       (fSection==="" || s.section===fSection);
+});
+
+let text="ATTENDANCE REPORT\n\n";
+
+filtered.forEach(s=>{
+let per=percent(s.present,s.total);
+
+text+=`Name: ${s.name}
+Branch: ${s.branch}
+Section: ${s.section}
+Attendance: ${per}%
+-------------------\n`;
+});
+
+let blob=new Blob([text],{type:"text/plain"});
+let link=document.createElement("a");
+link.href=URL.createObjectURL(blob);
+link.download="report.txt";
+link.click();
+}
+
+// INIT
+render();
+function logout(){
+  window.location.href="attendance(p1).html";
+}
+
+</script>
+
+</body>
+</html>
