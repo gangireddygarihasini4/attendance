@@ -30,7 +30,7 @@ if (role === "") {
             window.location.href = "fac.html";
         } 
         else if (found.role === "STUDENT") {
-            window.location.href = "std.html";
+            window.location.href = "std1.html";
         }
 
     } else {
